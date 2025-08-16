@@ -1,56 +1,37 @@
 #include "mainwindow.h"
-// ↪ 自定义头文件：包含你自己的 MainWindow 类声明
-//   比如：按钮、播放器指针、槽函数等都在这里定义
-//   必须包含，否则编译器不知道 MainWindow 是什么
-
 #include "ui_mainwindow.h"
-// ↪ Qt 自动生成的界面头文件
-//   当你用 Qt Designer 设计界面（.ui 文件）后，
-//   Qt 会自动生成这个文件，里面包含所有控件的指针
-//   比如：ui->playButton、ui->label 等
-//   没有它，你就无法访问界面上的按钮、标签等
-
 #include <QMediaPlayer>
-// ↪ Qt 多媒体模块的核心类：用于播放音频（MP3、WAV 等）和视频
-//   提供 play()、pause()、setSource() 等方法
-//   必须包含才能使用音乐播放功能
-//   注意：需要在 .pro 文件中添加 QT += multimedia
-
 #include <QAudioOutput>
-// ↪ Qt 6 中控制音量、音频输出的类
-//   在 Qt 6 里，QMediaPlayer 不再直接支持 setVolume()
-//   必须通过 QAudioOutput 来设置音量、选择输出设备（扬声器、耳机等）
-//   所以必须包含它，否则无法调节音量
-
 #include <QFile>
-// ↪ 用于操作文件系统：检查文件是否存在、读写文件等
-//   我们用它来判断音乐文件路径是否正确
-//   比如：QFile::exists(filePath) 检查 MP3 文件是否存在
-//   避免播放一个不存在的文件导致崩溃
-
 #include <QMessageBox>
-// ↪ 弹出对话框的类：显示提示、警告、错误信息
-//   比如：当文件不存在时，弹出警告框提醒
-
 #include <QDebug>
-// ↪ 调试输出工具：在 Qt Creator 的“应用程序输出”面板打印信息
-//   比如：qDebug() << "正在播放:" << filePath;
-//   帮助你调试程序，查看变量值、播放状态、路径是否正确
-//   开发阶段非常有用，相当于“打印日志”
+#include <QFileDialog>
+#include <QUrl>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     ,player(new QMediaPlayer(this))//初始化
     ,audioOutput(new QAudioOutput(this))//初始化音频输出
+    ,currentFilePath("")
 {
     ui->setupUi(this);
 
     //将播放器与音频输出关联
-    player->setAudioOutput(audioOutput);
 
-    //设置默认音量（0.0 ~ 1.0）
-    audioOutput->setVolume(0.7f);// 70% 音量
+    audioOutput->setVolume(0.7f); // 设置实际音量
+    ui->volumeSlider->setRange(0, 100);   // 0% ~ 100%
+    ui->volumeSlider->setValue(70);       // 默认 70%
+    player->setAudioOutput(audioOutput);
+    /********************************音量调节滑块**************************************/
+
+    connect(ui->volumeSlider, &QSlider::valueChanged, this, [this](int value){  // 当滑块值改变时，执行这里
+        audioOutput->setVolume(value/100.0);//
+        qDebug() << "音量已设置为:" << value << "%";
+    });
+
+    //初始显示播放
+    ui->playPauseButton->setText("播放");
 }
 
 MainWindow::~MainWindow()
@@ -58,27 +39,67 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_playButton_clicked()
+/********************************播放**************************************/
+void MainWindow::on_playPauseButton_clicked() //转到槽。适用场景：按钮点击、简单事件。隐式调用（Qt 内部自动 connect）
 {
-    //1.定义文件路径
-    QString filepath = "F:/QT_project/Music/Jamie Berry - Delight (Original Mix).mp3";
-
-    //2. 检查文件是否存在
-    if(!QFile::exists(filepath)){
-        QMessageBox::warning(this,"错误","文件不存在！\n请检查路径：" +filepath);
+    // 如果当前没有设置任何文件，且 currentFilePath 为空，则提示
+    if(currentFilePath.isEmpty()){
+        QMessageBox::warning(this,"提示","请先选择一首歌曲");
         return;
     }
 
-    //3. 创建 URL 对象（现在定义了！
-    QUrl url = QUrl::fromLocalFile(filepath);
-    //4. 设置音频源
-    player ->setSource(url);
-    //5. 播放
-    player ->play();
-    //  6. 调试输出（全部正确！）
-    qDebug()<<" 正在播放 " << filepath;
-    qDebug()<< "当前状态 " << player->playbackState();
-    qDebug()<< "当前音量 " << audioOutput->volume();
-    qDebug()<< "文件路径 " << url.toString();
+    // 检查文件是否存在
+    if(!QFile::exists(currentFilePath)){
+        QMessageBox::warning(this,"错误","文件不存在！\n请检查路径：" +currentFilePath);
+        return;
+    }
+
+
+    //播放与暂停
+    if(player->playbackState() == QMediaPlayer::PlayingState){
+        player->pause();
+        ui->playPauseButton->setText("播放");// 按钮文字变成“播放”
+        qDebug() << "已暂停";
+    }else if(player->playbackState() == QMediaPlayer::StoppedState){
+        player->setSource(QUrl::fromLocalFile(currentFilePath));
+        player->play();
+        ui->playPauseButton->setText("暂停");
+
+        qDebug() << "开始播放...";
+        qDebug() << "当前音量 (0.0-1.0):" << audioOutput->volume(); // 调试：打印当前音量
+    }else{
+        player->play();
+        ui->playPauseButton->setText("暂停");
+        qDebug() << "开始播放...";
+        qDebug() << "当前音量 (0.0-1.0):" << audioOutput->volume(); // 调试：打印当前音量
+    }
+    // 调试输出
+    qDebug() << "当前文件路径: " << currentFilePath;
+    qDebug() << "播放器状态: " << player->playbackState();
+
+}
+
+/********************************选择音乐**************************************/
+void MainWindow::on_pushButton_clicked()
+{
+    QString filepath = QFileDialog :: getOpenFileName(this,"选择音乐文件","F:/QT_project/ncmdump", "音频文件 (*.mp3 *.wav);;所有文件 (*)");
+
+    //如果用户选择了文件
+    if(!filepath.isEmpty()){ // isEmpty() 是 QString 的一个函数，意思是“这个字符串是不是空的？”
+        player->pause();
+        ui->playPauseButton->setText("播放");
+        currentFilePath = filepath;
+
+        QUrl url = QUrl::fromLocalFile(filepath);
+        player->setSource(url); // setSource() 是 QMediaPlayer 的函数，播放文件
+
+        // 新增：提取并显示音乐文件名
+        QFileInfo fileInfo(filepath);
+        QString musicName = fileInfo.baseName(); // 获取文件名（不带扩展名）
+        ui->musicNameLabel->setText(musicName);  // 更新标签显示
+
+        qDebug() << "已加载并播放：" << filepath;
+        qDebug() << "当前音量 (0.0-1.0):" << audioOutput->volume(); // 调试：打印当前音量
+    }
 }
 

@@ -18,7 +18,11 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
-QT += multimedia multimediawidgets
+QT += core gui widgets multimedia multimediawidgets
+
+
+# 设置源码编码为 UTF-8
+codepage = UTF-8
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
