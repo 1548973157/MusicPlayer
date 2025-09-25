@@ -819,43 +819,6 @@ debug\mainwindow.obj: mainwindow.cpp mainwindow.h \
 		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qpushbutton.h \
 		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qabstractbutton.h \
 		ui_mainwindow.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtCore\QVariant \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\QApplication \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qapplication.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\QHBoxLayout \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qboxlayout.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qlayout.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qlayoutitem.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qgridlayout.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\QLabel \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qlabel.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qframe.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtGui\qpicture.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtGui\qtextdocument.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\QListWidget \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qlistwidget.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qlistview.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qabstractitemview.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qabstractscrollarea.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtCore\qabstractitemmodel.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtCore\qitemselectionmodel.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qabstractitemdelegate.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qstyleoption.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qabstractspinbox.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtGui\qvalidator.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtCore\qregularexpression.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qslider.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qabstractslider.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qstyle.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qtabbar.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qrubberband.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\QMenuBar \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qmenubar.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qmenu.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\QSlider \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\QStatusBar \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\qstatusbar.h \
-		..\..\QT\6.9.0\msvc2022_64\include\QtWidgets\QWidget \
 		..\..\QT\6.9.0\msvc2022_64\include\QtMultimedia\QMediaPlayer \
 		..\..\QT\6.9.0\msvc2022_64\include\QtMultimedia\qmediaplayer.h \
 		..\..\QT\6.9.0\msvc2022_64\include\QtMultimedia\qtmultimediaglobal.h \

@@ -19,17 +19,20 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , player(new QMediaPlayer(this))      // ✅ 正确初始化
-    , audioOutput(new QAudioOutput(this)) // ✅ 正确初始化
+    , player(new QMediaPlayer(this))      //
+    , audioOutput(new QAudioOutput(this)) //
     , m_mode(ORDER_MODE)
 // player和audioOutput在函数体内创建
 {
-    setBackGround(":/Image/2A4E83B8FB50B24096D8C3975A128C3D.jpg");
+    player->setAudioOutput(audioOutput);  // <<<< 放在最前面！
     ui->setupUi(this);
+    setBackGround(":/Image/2A4E83B8FB50B24096D8C3975A128C3D.jpg");
     //按钮大小
     initButtons();
+
     QString musicDir = "F:/QT_project/ncmdump";
     listButton(musicDir);
+
     srand(time(NULL));//随机数种子
     audioOutput->setVolume(0.7f); // 设置实际音量
     ui->volumeSlider->setRange(0, 100);   // 0% ~ 100%
@@ -56,7 +59,47 @@ MainWindow::MainWindow(QWidget *parent)
         audioOutput->setVolume(value/100.0);//
         qDebug() << "音量已设置为:" << value << "%";
     });
+    // /********************************进程滑块**************************************/
+    // connect(player, &QMediaPlayer::positionChanged, this, [this](qint64 position) {
+    //     if (!isUserDragging) { // 只有非拖动状态才自动更新
+    //         qint64 duration = player->duration();
+    //         if (duration > 0) {
+    //             int value = (position * 1000) / duration;
+    //             ui->progressSlider->setValue(value);
+    //         }
+    //     }
 
+    //     // 更新时间显示（可选）
+    //     updateTimerDisplay(); // 我们下面定义这个函数
+    // });
+
+    // connect(player, &QMediaPlayer::durationChanged, this, [this](qint64 duration) {
+    //     Q_UNUSED(duration);
+    //     // duration 改变时也更新一次（比如换歌）
+    //     if (!isUserDragging) {
+    //         qint64 pos = player->position();
+    //         qint64 dur = player->duration();
+    //         if (dur > 0) {
+    //             ui->progressSlider->setValue((pos * 1000) / dur);
+    //         }
+    //     }
+    //     updateTimerDisplay(); // 初始总时间
+    // });
+
+    // // 用户开始拖动
+    // connect(ui->progressSlider, &QSlider::sliderPressed, this, [this]() {
+    //     isUserDragging = true;
+    // });
+
+
+    // // 用户松开滑块 → 跳转到该位置
+    // connect(ui->progressSlider, &QSlider::sliderReleased, this, [this]() {
+    //     isUserDragging = false;
+    //     qint64 duration = player->duration();
+    //     qint64 newPos = (ui->progressSlider->value() * duration) / 1000;
+    //     player->setPosition(newPos);
+    //     qDebug() << "跳转到位置:" << formatTime(newPos);
+    // });
  /********************************playbackStateChanged信号来准确跟踪状态**************************************/
     connect(player, &QMediaPlayer::playbackStateChanged, this, [this](QMediaPlayer::PlaybackState state){
         qDebug() << "播放状态改变:" << state;
@@ -83,6 +126,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 /********************************背景**************************************/
 void MainWindow::setBackGround(const QString & filename){
     QPixmap pixmap(filename);//创建照片
@@ -94,7 +138,6 @@ void MainWindow::setBackGround(const QString & filename){
     this->setPalette(palette);//调色板应用到窗口
     this->setAutoFillBackground(true); // 确保背景自动填充
 }
-
 
 /********************************按钮UI**************************************/
 void MainWindow::setButtonStyle(QPushButton * button,const QString & filename){

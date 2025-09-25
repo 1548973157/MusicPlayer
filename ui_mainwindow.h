@@ -31,12 +31,15 @@ public:
     QSlider *volumeSlider;
     QWidget *widget;
     QHBoxLayout *horizontalLayout;
-    QLabel *musicNameLabel;
     QPushButton *prevButton;
     QPushButton *playPauseButton;
     QPushButton *nextButton;
     QPushButton *modeButton;
     QPushButton *listButton;
+    QLabel *musicNameLabel;
+    QSlider *progressSlider;
+    QLabel *currentTimeLabel;
+    QLabel *totalTimeLabel;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -44,7 +47,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1165, 743);
+        MainWindow->resize(1193, 731);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         musicList = new QListWidget(centralwidget);
@@ -52,18 +55,13 @@ public:
         musicList->setGeometry(QRect(800, 20, 361, 511));
         volumeSlider = new QSlider(centralwidget);
         volumeSlider->setObjectName("volumeSlider");
-        volumeSlider->setGeometry(QRect(740, 500, 16, 160));
+        volumeSlider->setGeometry(QRect(760, 490, 16, 160));
         volumeSlider->setOrientation(Qt::Orientation::Vertical);
         widget = new QWidget(centralwidget);
         widget->setObjectName("widget");
         widget->setGeometry(QRect(120, 610, 611, 71));
         horizontalLayout = new QHBoxLayout(widget);
         horizontalLayout->setObjectName("horizontalLayout");
-        musicNameLabel = new QLabel(widget);
-        musicNameLabel->setObjectName("musicNameLabel");
-
-        horizontalLayout->addWidget(musicNameLabel);
-
         prevButton = new QPushButton(widget);
         prevButton->setObjectName("prevButton");
 
@@ -89,10 +87,24 @@ public:
 
         horizontalLayout->addWidget(listButton);
 
+        musicNameLabel = new QLabel(centralwidget);
+        musicNameLabel->setObjectName("musicNameLabel");
+        musicNameLabel->setGeometry(QRect(20, 610, 92, 49));
+        progressSlider = new QSlider(centralwidget);
+        progressSlider->setObjectName("progressSlider");
+        progressSlider->setGeometry(QRect(170, 570, 501, 22));
+        progressSlider->setMaximum(1000);
+        progressSlider->setOrientation(Qt::Orientation::Horizontal);
+        currentTimeLabel = new QLabel(centralwidget);
+        currentTimeLabel->setObjectName("currentTimeLabel");
+        currentTimeLabel->setGeometry(QRect(100, 570, 69, 19));
+        totalTimeLabel = new QLabel(centralwidget);
+        totalTimeLabel->setObjectName("totalTimeLabel");
+        totalTimeLabel->setGeometry(QRect(680, 570, 69, 19));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1165, 25));
+        menubar->setGeometry(QRect(0, 0, 1193, 25));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -106,12 +118,14 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        musicNameLabel->setText(QCoreApplication::translate("MainWindow", "\346\234\252\346\222\255\346\224\276", nullptr));
         prevButton->setText(QString());
         playPauseButton->setText(QString());
         nextButton->setText(QString());
         modeButton->setText(QString());
         listButton->setText(QString());
+        musicNameLabel->setText(QCoreApplication::translate("MainWindow", "\346\234\252\346\222\255\346\224\276", nullptr));
+        currentTimeLabel->setText(QCoreApplication::translate("MainWindow", "00:00", nullptr));
+        totalTimeLabel->setText(QCoreApplication::translate("MainWindow", "00:00", nullptr));
     } // retranslateUi
 
 };

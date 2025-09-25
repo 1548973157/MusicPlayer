@@ -1,0 +1,49 @@
+# Qt 编译文件
+build-*/
+debug/
+release/
+*.pro.user
+*.pro.user.*
+*.autosave
+
+# 编译生成文件
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+*.dylib
+
+# Qt 特定文件
+moc_*
+qrc_*
+ui_*
+*.moc
+*.qm
+Makefile*
+*.prl
+
+# IDE 文件
+.vs/
+.vscode/
+*.vcxproj*
+*.sln
+*.suo
+*.user
+*.filters
+*.natvis
+
+# 日志文件
+*.log
+*.tlog/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*~
+*.autosave
+*.tmp
