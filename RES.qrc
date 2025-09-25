@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icon/List.png</file>
+        <file>Icon/Next.png</file>
+        <file>Icon/Pause.png</file>
+        <file>Icon/play.png</file>
+        <file>Icon/Prev.png</file>
+        <file>Icon/Search.png</file>
+        <file>Icon/Volume.png</file>
+        <file>Image/2A4E83B8FB50B24096D8C3975A128C3D.jpg</file>
+        <file>Image/8FD8317E8A288D1CB3155E3C711A7FB3.jpg</file>
+        <file>Image/64AF5035BD682EE6C78866EADE7763E1.jpg</file>
+        <file>Image/997B33FDFC51F1A45956B2CDFB69FB70.jpg</file>
+        <file>Image/076596EFBCD82C613FD6453D54E67192.jpg</file>
+        <file>Image/C297CE7EFF6EEDAEB82EFBC9B97754D7.jpg</file>
+        <file>Icon/Circle.png</file>
+        <file>Icon/Order.png</file>
+        <file>Icon/Random.png</file>
+    </qresource>
+</RCC>
