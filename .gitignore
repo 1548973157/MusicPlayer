@@ -1,3 +1,5 @@
+# 创建更完整的.gitignore文件
+cat > .gitignore << 'EOF'
 # Qt 编译文件
 build-*/
 debug/
@@ -15,6 +17,7 @@ release/
 *.a
 *.lib
 *.dylib
+*.idx
 
 # Qt 特定文件
 moc_*
@@ -28,6 +31,7 @@ Makefile*
 # IDE 文件
 .vs/
 .vscode/
+.qtc_clangd/
 *.vcxproj*
 *.sln
 *.suo
@@ -47,3 +51,4 @@ Thumbs.db
 *~
 *.autosave
 *.tmp
+EOF
